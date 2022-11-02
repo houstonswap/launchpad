@@ -1,0 +1,11 @@
+[package]
+name = "HoustonLaunchPad"
+version = "1.0.1"
+
+[addresses]
+HoustonLaunchPad = "0x7ab72b249ec24f76fe66b6de19dcee1e3d3361db5c2cccfaa48ea8659060a1bd"
+#HoustonDevTools = "_"
+
+[dependencies]
+AptosFramework = { git = "https://github.com/aptos-labs/aptos-core.git", subdir = "aptos-move/framework/aptos-framework/", rev = "devnet" }
+#HoustonDevTools = { local = "../dev_tools" }
