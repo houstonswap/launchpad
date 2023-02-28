@@ -6,14 +6,7 @@ module hou_ido{
     use aptos_framework::aptos_coin::{AptosCoin};
     use aptos_framework::account;
     use std::signer;
-    // use std::vector;
     use aptos_framework::event::{Self, EventHandle};
-    // use std::error;
-    #[test_only]
-    use HoustonDevTools::dev::{Self, USDT};
-    // #[test_only]
-    // use aptos_framework::aptos_coin::{Self};
-    // #[test_only]
     use std::timestamp;
     
     struct Pool<phantom CoinType> has key {
@@ -297,6 +290,13 @@ module hou_ido{
     *        |__|     |_______|_______/       |__|     
     *                                                  
     */
+
+
+    #[test_only]
+    use HoustonDevTools::dev::{Self, USDT};
+
+    // #[test_only]
+    // use aptos_framework::aptos_coin::{Self};
         
         
     #[test(acc=@HoustonSwap, alice=@0xA11CE, aptos=@0x1)]
@@ -327,7 +327,7 @@ module hou_ido{
     }
 
     #[test(acc=@HoustonSwap, alice=@0xA11CE, aptos=@0x1)]
-    #[expected_failure(abort_code = 6)]
+    #[expected_failure(abort_code = 6, location = Self)]
     fun test_launch_fail_time_0(acc: &signer, alice: &signer, aptos: &signer) acquires Pool{
         // 0. setup
         timestamp::set_time_has_started_for_testing(aptos);
@@ -345,7 +345,7 @@ module hou_ido{
     }
 
     #[test(acc=@HoustonSwap, alice=@0xA11CE, aptos=@0x1)]
-    #[expected_failure(abort_code = 6)]
+    #[expected_failure(abort_code = 6, location = Self)]
     fun test_launch_fail_time_1(acc: &signer, alice: &signer, aptos: &signer) acquires Pool{
         // 0. setup
         timestamp::set_time_has_started_for_testing(aptos);
@@ -362,7 +362,7 @@ module hou_ido{
     }
 
     #[test(acc=@HoustonSwap, alice=@0xA11CE, aptos=@0x1)]
-    #[expected_failure(abort_code = 6)]
+    #[expected_failure(abort_code = 6, location = Self)]
     fun test_launch_fail_time_2(acc: &signer, alice: &signer, aptos: &signer) acquires Pool{
         // 0. setup
         timestamp::set_time_has_started_for_testing(aptos);
@@ -519,7 +519,7 @@ module hou_ido{
 
 
     #[test(acc=@HoustonSwap, alice=@0xA11CE, bob=@0xB0B, aptos=@0x1)]
-    #[expected_failure(abort_code = 7)]
+    #[expected_failure(abort_code = 7, location = Self)]
     fun test_stake_fail_cap_over(acc: &signer, alice: &signer, bob: &signer, aptos: &signer) acquires Pool, UserInfo {
         // 0. setup and launch
         test_launch(acc, alice, aptos);
@@ -544,7 +544,7 @@ module hou_ido{
     }
 
     #[test(acc=@HoustonSwap, alice=@0xA11CE, bob=@0xB0B, aptos=@0x1)]
-    #[expected_failure(abort_code = 2)]
+    #[expected_failure(abort_code = 2, location = Self)]
     fun test_stake_fail_no_pool(acc: &signer, alice: &signer, bob: &signer, aptos: &signer) acquires Pool, UserInfo {
         // 0. setup and launch
         test_launch(acc, alice, aptos);
@@ -558,7 +558,7 @@ module hou_ido{
     }
 
     #[test(acc=@HoustonSwap, alice=@0xA11CE, bob=@0xB0B, aptos=@0x1)]
-    #[expected_failure(abort_code = 3)]
+    #[expected_failure(abort_code = 3, location = Self)]
     fun test_stake_fail_time(acc: &signer, alice: &signer, bob: &signer, aptos: &signer) acquires Pool, UserInfo {
         // 0. setup and launch
         test_launch(acc, alice, aptos);
@@ -571,7 +571,7 @@ module hou_ido{
     }
 
     #[test(acc=@HoustonSwap, alice=@0xA11CE, bob=@0xB0B, aptos=@0x1)]
-    #[expected_failure(abort_code = 3)]
+    #[expected_failure(abort_code = 3, location = Self)]
     fun test_stake_fail_time_1(acc: &signer, alice: &signer, bob: &signer, aptos: &signer) acquires Pool, UserInfo {
         // 0. setup and launch
         test_launch(acc, alice, aptos);
@@ -606,7 +606,7 @@ module hou_ido{
     }
     
     #[test(acc=@HoustonSwap, alice=@0xA11CE, bob=@0xB0B, aptos=@0x1)]
-    #[expected_failure(abort_code = 13)]
+    #[expected_failure(abort_code = 13, location = Self)]
     fun test_claim_fail(acc: &signer, alice: &signer, bob: &signer, aptos: &signer) acquires Pool, UserInfo {
         test_stake(acc, alice, bob, aptos);
         timestamp::fast_forward_seconds(400);
@@ -633,7 +633,7 @@ module hou_ido{
 
     
     #[test(acc=@HoustonSwap, alice=@0xA11CE, aptos=@0x1)]
-    #[expected_failure(abort_code = 11)]
+    #[expected_failure(abort_code = 11, location = Self)]
     fun test_withdraw_payment_fail_time(acc: &signer, alice: &signer, aptos: &signer) acquires Pool, UserInfo {
         // 0. setup
         timestamp::set_time_has_started_for_testing(aptos);
@@ -655,19 +655,14 @@ module hou_ido{
     }
 
     #[test(acc=@HoustonSwap, alice=@0xA11CE, bob=@0xB0B, aptos=@0x1)]
-    #[expected_failure(abort_code = 8)]
+    #[expected_failure(abort_code = 8, location = Self)]
     fun test_withdraw_payment_fail_treasury(acc: &signer, alice: &signer, bob: &signer, aptos: &signer) acquires Pool, UserInfo {
         test_stake(acc, alice, bob, aptos);
         timestamp::fast_forward_seconds(400);
         withdraw_payment<USDT>(alice); // not treasury
     }
 
-    
 
-
-        
-
-    
 
 }
     
